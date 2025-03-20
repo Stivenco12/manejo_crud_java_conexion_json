@@ -89,28 +89,28 @@ public class EquipoRepositoryImpl implements ClientRespository {
 
     @Override
     public void actualizar(Equipos equipos) {
-        String sql = "UPDATE equipos SET nombre = ?, año_fundacion = ?, entrenador = ? WHERE id = ?";
+        String sql = "UPDATE equipos SET nombre = ?, año_fundacion = ?, entrenador = ? WHERE Id = ?";
         try (Connection conexion = connection.getConexion();
-            PreparedStatement stmt = conexion.prepareStatement(sql)) {
+             PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, equipos.getName());
             stmt.setInt(2, equipos.getAño_fundacion());
             stmt.setString(3, equipos.getEntrenador());
             stmt.setInt(4, equipos.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error al actualizar: " + e.getMessage());
         }
     }
 
     @Override
     public void eliminar(int id) {
-        String sql0 = "SELECT * FROM clientes WHERE id = ?";
+        String sql0 = "SELECT * FROM equipos WHERE id = ?";
         try (Connection conexion = connection.getConexion();
                 PreparedStatement stmt = conexion.prepareStatement(sql0)) {
                 stmt.setInt(1, id);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
-                    String sql = "DELETE FROM clientes WHERE id = ?";
+                    String sql = "DELETE FROM equipos WHERE id = ?";
                     try (Connection conexion1 = connection.getConexion();
                         PreparedStatement stmt1 = conexion1.prepareStatement(sql)) {
                         stmt1.setInt(1, id);
@@ -127,4 +127,6 @@ public class EquipoRepositoryImpl implements ClientRespository {
                 System.out.println("error");
         }
     }
+
+    
 }
